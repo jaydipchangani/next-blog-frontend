@@ -16,22 +16,22 @@ export default function ProtectedRoute({
   const pathname = usePathname();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+  const token = localStorage.getItem('token');
 
-    if (!token && pathname !== '/login' && pathname !== '/register') {
-      router.replace('/login');
-      return;
-    }
+  // Pages that are public when NOT logged in
+  const publicPages = ['/login', '/register', '/signup'];
 
-    if (token && (pathname === '/login' || pathname === '/register')) {
-      router.replace(user?.role === 'admin' ? '/admin/blogs' : '/blogs');
-      return;
-    }
+  // If no token → redirect to login when trying to access a protected page
+  if (!token && !publicPages.includes(pathname)) {
+    router.replace('/login');
+  }
 
-    if (role && user && user.role !== role) {
-      router.replace(user.role === 'admin' ? '/admin/blogs' : '/blogs');
-    }
-  }, [user, pathname, router, role]);
+  // If logged in → redirect away from login/register/signup
+  if (token && publicPages.includes(pathname)) {
+    router.replace(user?.role === 'admin' ? '/admin/blogs' : '/blogs');
+  }
+}, [user, pathname, router]);
+
 
   return <>{children}</>;
 }

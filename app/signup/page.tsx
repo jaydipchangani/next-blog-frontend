@@ -2,17 +2,20 @@
 
 import React, { useState, useContext } from 'react';
 import { Form, Input, Button, message, Card } from 'antd';
-import { AuthContext } from '../../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const SignupPage = () => {
-  const { register } = useContext(AuthContext);
+  const { register } = useAuth();
   const [loading, setLoading] = useState(false);
-
+  const router = useRouter();
   const onFinish = async (values: any) => {
     try {
       setLoading(true);
       await register(values.name, values.email, values.password);
       message.success('Account created successfully!');
+      router.replace('/login');
     } catch (err: any) {
       message.error(err.response?.data?.message || 'Signup failed');
     } finally {
@@ -51,6 +54,12 @@ const SignupPage = () => {
             </Button>
           </Form.Item>
         </Form>
+        <div className="text-center mt-4">
+          Already have an account?{" "}
+          <Link href="/login" className="text-blue-500 hover:underline">
+            Login
+          </Link>
+        </div>
       </Card>
     </div>
   );

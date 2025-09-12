@@ -3,6 +3,7 @@
 import React, { useState, useContext } from 'react';
 import { Form, Input, Button, message, Card } from 'antd';
 import { useAuth } from '../../context/AuthContext';
+import Link from 'next/link';
 
 const LoginPage = () => {
   const { login } = useAuth();
@@ -48,7 +49,12 @@ const LoginPage = () => {
     </Button>
   </Form.Item>
 </Form>
-
+<div className="text-center mt-4">
+          Don&#39;t have an account?{" "}
+          <Link href="/signup" className="text-blue-500 hover:underline">
+            Sign Up
+          </Link>
+        </div>
       </Card>
     </div>
   );
