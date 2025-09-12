@@ -1,0 +1,60 @@
+'use client';
+
+import { Modal, Form, Input, Switch, Button } from 'antd';
+import { useEffect } from 'react';
+
+interface BlogFormModalProps {
+  visible: boolean;
+  onCancel: () => void;
+  onSubmit: (values: any) => void;
+  initialValues?: any;
+  loading?: boolean;
+}
+
+const BlogFormModal: React.FC<BlogFormModalProps> = ({ visible, onCancel, onSubmit, initialValues, loading }) => {
+  const [form] = Form.useForm();
+
+  useEffect(() => {
+    if (initialValues) {
+      form.setFieldsValue(initialValues);
+    } else {
+      form.resetFields();
+    }
+  }, [initialValues, form]);
+
+  return (
+    <Modal
+      title={initialValues ? 'Edit Blog' : 'Add Blog'}
+      open={visible}
+      onCancel={onCancel}
+      footer={null}
+      destroyOnClose
+    >
+      <Form layout="vertical" form={form} onFinish={onSubmit}>
+        <Form.Item label="Title" name="title" rules={[{ required: true, message: 'Title is required' }]}>
+          <Input />
+        </Form.Item>
+
+        <Form.Item label="Excerpt" name="excerpt">
+          <Input />
+        </Form.Item>
+
+        <Form.Item label="Content" name="content" rules={[{ required: true, message: 'Content is required' }]}>
+          <Input.TextArea rows={4} />
+        </Form.Item>
+
+        <Form.Item label="Paid" name="paid" valuePropName="checked">
+          <Switch />
+        </Form.Item>
+
+        <Form.Item>
+          <Button type="primary" htmlType="submit" loading={loading} block>
+            {initialValues ? 'Update Blog' : 'Create Blog'}
+          </Button>
+        </Form.Item>
+      </Form>
+    </Modal>
+  );
+};
+
+export default BlogFormModal;
