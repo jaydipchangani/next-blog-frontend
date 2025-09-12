@@ -6,7 +6,7 @@ export const getAllBlogs = async () => {
 };
 
 export const getUserBlogs = async () => {
-  const res = await axios.get('/blogs/user');
+  const res = await axios.get('/blogs');
   return res.data;
 };
 
@@ -22,5 +22,10 @@ export const updateBlog = async (id: string, data: any) => {
 
 export const deleteBlog = async (id: string) => {
   const res = await axios.delete(`/blogs/${id}`);
+  return res.data;
+};
+
+export const getBlogById = async (id: string) => {
+  const res = await axios.get(`/blogs/${id}`);
   return res.data;
 };
