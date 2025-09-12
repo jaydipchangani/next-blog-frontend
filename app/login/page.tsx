@@ -6,11 +6,11 @@ import { AuthContext } from '../../context/AuthContext';
 
 const LoginPage = () => {
   const { login } = useContext(AuthContext);
-  console.log('AuthContext:', login); // <-- add this
+  //console.log('AuthContext:', login); // <-- add this
   const [loading, setLoading] = useState(false);
 
   const onFinish = async (values: any) => {
-  console.log('Form values:', values); // <-- add this
+  //console.log('Form values:', values); // <-- add this
   try {
     setLoading(true);
     await login(values.email, values.password);

@@ -44,7 +44,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   const login = async (email: string, password: string) => {
   try {
     const res = await loginAPI(email, password); 
-    console.log('Login response:', res);
+    //console.log('Login response:', res);
     localStorage.setItem('token', res.access_token);
 
     const decoded: any = jwtDecode(res.access_token);

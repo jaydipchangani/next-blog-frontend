@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useContext } from 'react';
 import { Card, Row, Col, message } from 'antd';
+import Link from 'next/link';
 import { getUserBlogs } from '../../services/blogsApi';
 import { AuthContext } from '../../context/AuthContext';
 
@@ -27,10 +28,16 @@ const BlogsPage = () => {
       <Row gutter={[16, 16]}>
         {blogs.map((blog) => (
           <Col span={8} key={blog._id}>
-            <Card title={blog.title} bordered={true}>
-              <p>{blog.excerpt}</p>
-              <p>{blog.paid ? '(Paid Blog)' : '(Free Blog)'}</p>
-            </Card>
+            <Link href={`/blogs/${blog._id}`}>
+              <Card
+                title={blog.title}
+                bordered={true}
+                hoverable
+              >
+                <p>{blog.excerpt}</p>
+                <p>{blog.paid ? '(Paid Blog)' : '(Free Blog)'}</p>
+              </Card>
+            </Link>
           </Col>
         ))}
       </Row>
