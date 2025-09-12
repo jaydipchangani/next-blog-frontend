@@ -1,27 +1,37 @@
 'use client';
 
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import {  useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/AuthContext';
 
-export default function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { user } = useAuth()!;
+export default function ProtectedRoute({
+  children,
+  role, 
+}: {
+  children: React.ReactNode;
+  role?: 'admin' | 'user';
+}) {
+  const { user } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
 
-    // If no token → force to /login
     if (!token && pathname !== '/login' && pathname !== '/register') {
       router.replace('/login');
+      return;
     }
 
-    // If already logged in → prevent going back to login/register
     if (token && (pathname === '/login' || pathname === '/register')) {
-      router.replace(user?.role === 'ADMIN' ? '/admin/blogs' : '/blogs');
+      router.replace(user?.role === 'admin' ? '/admin/blogs' : '/blogs');
+      return;
     }
-  }, [user, pathname, router]);
+
+    if (role && user && user.role !== role) {
+      router.replace(user.role === 'admin' ? '/admin/blogs' : '/blogs');
+    }
+  }, [user, pathname, router, role]);
 
   return <>{children}</>;
 }

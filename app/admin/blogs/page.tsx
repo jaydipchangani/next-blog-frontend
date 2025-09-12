@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Table, Button, Space, Popconfirm, message } from 'antd';
 import { getAllBlogs, deleteBlog, createBlog, updateBlog } from '../../../services/blogsApi';
 import BlogFormModal from '../../../components/BlogFormModal';
+import ProtectedRoute from '@/components/ProtectedRoute';
 
 const AdminBlogsPage = () => {
   const [blogs, setBlogs] = useState<any[]>([]);
@@ -81,6 +82,8 @@ const AdminBlogsPage = () => {
   ];
 
   return (
+    <ProtectedRoute role='admin'>
+
     <div className="p-6">
       <Space style={{ marginBottom: 16 }}>
         <Button type="primary" onClick={() => handleOpenModal()}>New Blog</Button>
@@ -95,6 +98,8 @@ const AdminBlogsPage = () => {
         loading={modalLoading}
       />
     </div>
+  </ProtectedRoute>
+    
   );
 };
 
