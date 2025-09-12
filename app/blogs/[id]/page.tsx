@@ -4,13 +4,13 @@ import { useEffect, useState, useContext } from 'react';
 import { useParams } from 'next/navigation';
 import { Card, Spin, message, Typography, Alert } from 'antd';
 import { getBlogById } from '../../../services/blogsApi';
-import { AuthContext } from '../../../context/AuthContext';
+import { useAuth } from '../../../context/AuthContext';
 
 const { Title, Paragraph } = Typography;
 
 const BlogDetailPage = () => {
   const { id } = useParams();
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
 
   const [blog, setBlog] = useState<any>(null);
   const [loading, setLoading] = useState(false);

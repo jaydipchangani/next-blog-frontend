@@ -4,11 +4,11 @@ import { useEffect, useState, useContext } from 'react';
 import { Card, Row, Col, message } from 'antd';
 import Link from 'next/link';
 import { getUserBlogs } from '../../services/blogsApi';
-import { AuthContext } from '../../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 
 const BlogsPage = () => {
   const [blogs, setBlogs] = useState<any[]>([]);
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
 
   const fetchBlogs = async () => {
     try {

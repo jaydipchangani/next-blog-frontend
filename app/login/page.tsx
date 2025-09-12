@@ -2,10 +2,10 @@
 
 import React, { useState, useContext } from 'react';
 import { Form, Input, Button, message, Card } from 'antd';
-import { AuthContext } from '../../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 
 const LoginPage = () => {
-  const { login } = useContext(AuthContext);
+  const { login } = useAuth();
   //console.log('AuthContext:', login); // <-- add this
   const [loading, setLoading] = useState(false);
 
