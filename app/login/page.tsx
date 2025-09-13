@@ -1,5 +1,5 @@
 'use client';
-
+import '@ant-design/v5-patch-for-react-19'; 
 import React, { useState, useContext } from 'react';
 import { Form, Input, Button, message, Card } from 'antd';
 import { useAuth } from '../../context/AuthContext';

@@ -1,5 +1,5 @@
 'use client';
-
+import '@ant-design/v5-patch-for-react-19'; 
 import { useEffect, useState } from 'react';
 import { Table, Button, Space, Popconfirm, message } from 'antd';
 import { getAllBlogs, deleteBlog, createBlog, updateBlog } from '../../../services/blogsApi';

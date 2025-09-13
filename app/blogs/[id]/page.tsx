@@ -1,5 +1,5 @@
 'use client';
-
+import '@ant-design/v5-patch-for-react-19'; 
 import { useEffect, useState, useContext } from 'react';
 import { useParams } from 'next/navigation';
 import { Card, Spin, message, Typography, Alert } from 'antd';

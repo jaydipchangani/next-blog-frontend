@@ -9,20 +9,21 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@ant-design/v5-patch-for-react-19": "^1.0.3",
+    "@tanstack/react-query": "^5.87.4",
     "antd": "^5.27.3",
     "axios": "^1.12.0",
     "jwt-decode": "^4.0.0",
     "next": "15.5.3",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-query": "^3.39.3"
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20.19.13",
-    "@types/react": "^19.1.12",
-    "@types/react-dom": "^19",
+    "@types/react": "^18.3.24",
+    "@types/react-dom": "^18.3.7",
     "eslint": "^9",
     "eslint-config-next": "15.5.3",
     "tailwindcss": "^4",

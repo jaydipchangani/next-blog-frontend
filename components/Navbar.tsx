@@ -1,5 +1,5 @@
 'use client';
-
+import '@ant-design/v5-patch-for-react-19'; 
 import { useAuth } from '../context/AuthContext';
 import { Button, Dropdown, MenuProps } from 'antd';
 import { LogoutOutlined, UserOutlined } from '@ant-design/icons';

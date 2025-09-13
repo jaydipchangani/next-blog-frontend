@@ -1,5 +1,5 @@
 'use client';
-
+import '@ant-design/v5-patch-for-react-19'; 
 import { Modal, Form, Input, Switch, Button } from 'antd';
 import { useEffect } from 'react';
 
@@ -15,6 +15,8 @@ const BlogFormModal: React.FC<BlogFormModalProps> = ({ visible, onCancel, onSubm
   const [form] = Form.useForm();
 
   useEffect(() => {
+    if (!visible) return;
+
     if (initialValues) {
       form.setFieldsValue(initialValues);
     } else {
@@ -28,7 +30,6 @@ const BlogFormModal: React.FC<BlogFormModalProps> = ({ visible, onCancel, onSubm
       open={visible}
       onCancel={onCancel}
       footer={null}
-      destroyOnClose
     >
       <Form layout="vertical" form={form} onFinish={onSubmit}>
         <Form.Item label="Title" name="title" rules={[{ required: true, message: 'Title is required' }]}>

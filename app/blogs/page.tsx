@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { message } from 'antd';
 import { getUserBlogs } from '../../services/blogsApi';
 import BlogCard from '../../components/BlogCard';
-import DashboardLayout from './[id]/layout'; // user layout wraps this page
+import DashboardLayout from './[id]/layout'; 
 
 const BlogsPage = () => {
   const [blogs, setBlogs] = useState<any[]>([]);

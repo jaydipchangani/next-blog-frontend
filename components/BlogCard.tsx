@@ -1,5 +1,5 @@
 'use client';
-
+import '@ant-design/v5-patch-for-react-19'; 
 import Link from 'next/link';
 import { Card, Tag } from 'antd';
 
