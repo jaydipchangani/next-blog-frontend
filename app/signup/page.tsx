@@ -1,15 +1,16 @@
 'use client';
 import '@ant-design/v5-patch-for-react-19'; 
-import React, { useState, useContext } from 'react';
-import { Form, Input, Button, message, Card } from 'antd';
+import React, { useState } from 'react';
+import { Form, Input, Button, message, Card, Divider } from 'antd';
 import { useAuth } from '../../context/AuthContext';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 const SignupPage = () => {
-  const { register } = useAuth();
+  const { register, loginWithGoogle } = useAuth();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+
   const onFinish = async (values: any) => {
     try {
       setLoading(true);
@@ -54,6 +55,17 @@ const SignupPage = () => {
             </Button>
           </Form.Item>
         </Form>
+
+        <Divider>Or</Divider>
+
+        <Button
+          type="default"
+          className="w-full flex justify-center items-center"
+          onClick={() => loginWithGoogle()}
+        >
+          Continue with Google
+        </Button>
+
         <div className="text-center mt-4">
           Already have an account?{" "}
           <Link href="/login" className="text-blue-500 hover:underline">

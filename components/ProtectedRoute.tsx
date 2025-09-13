@@ -19,7 +19,7 @@ export default function ProtectedRoute({
   const token = localStorage.getItem('token');
 
   // Pages that are public when NOT logged in
-  const publicPages = ['/login', '/register', '/signup' ,'/'];
+  const publicPages = ['/login', '/register', '/signup' ,'/','/google/callback'];
 
   // If no token → redirect to login when trying to access a protected page
   if (!token && !publicPages.includes(pathname)) {
