@@ -58,13 +58,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     });
     const data = await res.json();
 
+    if (!res.ok) {
+    throw new Error(data.message || 'Registration failed');
+  }
+
     if (data.access_token) {
       localStorage.setItem('token', data.access_token);
       const decoded: any = jwtDecode(data.access_token);
       setUser(decoded);
       router.replace(decoded.role === 'ADMIN' ? '/admin/blogs' : '/blogs');
-    } else {
-      throw new Error(data.message || 'Registration failed');
     }
   };
 

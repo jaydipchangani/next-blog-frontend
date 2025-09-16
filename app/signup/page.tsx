@@ -1,7 +1,7 @@
 'use client';
 import '@ant-design/v5-patch-for-react-19'; 
 import React, { useState } from 'react';
-import { Form, Input, Button, message, Card, Divider } from 'antd';
+import { Form, Input, Button, message, Card, Divider, Progress } from 'antd';
 import { useAuth } from '../../context/AuthContext';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -10,6 +10,18 @@ const SignupPage = () => {
   const { register, loginWithGoogle } = useAuth();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const [password, setPassword] = useState('');
+  const [strength, setStrength] = useState(0);
+
+  const checkPasswordStrength = (pwd: string) => {
+    let score = 0;
+    if (pwd.length >= 8) score += 1;
+    if (/[A-Z]/.test(pwd)) score += 1;
+    if (/[a-z]/.test(pwd)) score += 1;
+    if (/\d/.test(pwd)) score += 1;
+    if (/[@$!%*?&]/.test(pwd)) score += 1;
+    setStrength(score);
+  };
 
   const onFinish = async (values: any) => {
     try {
@@ -45,10 +57,36 @@ const SignupPage = () => {
           <Form.Item
             label="Password"
             name="password"
-            rules={[{ required: true, message: 'Please input your password!' }]}
+            rules={[
+              { required: true, message: 'Please input your password!' },
+              {
+                pattern:
+                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                message:
+                  'Password must be at least 8 characters long and include uppercase, lowercase, number, and special character!',
+              },
+            ]}
+            hasFeedback
           >
-            <Input.Password />
+            <Input.Password
+              value={password}
+              onChange={(e) => {
+                const val = e.target.value;
+                setPassword(val);
+                checkPasswordStrength(val);
+              }}
+            />
           </Form.Item>
+
+          {password && (
+            <Progress
+              percent={(strength / 5) * 100}
+              size="small"
+              status={strength < 4 ? 'exception' : 'success'}
+              showInfo={false}
+            />
+          )}
+
           <Form.Item>
             <Button type="primary" htmlType="submit" loading={loading} block>
               Sign Up
