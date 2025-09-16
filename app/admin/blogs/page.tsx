@@ -1,7 +1,7 @@
 'use client';
 import '@ant-design/v5-patch-for-react-19'; 
 import { useEffect, useState } from 'react';
-import { Table, Button, Space, Popconfirm, message } from 'antd';
+import { Table, Button, Space, Popconfirm, message, Row, Col } from 'antd';
 import { getAllBlogs, deleteBlog, createBlog, updateBlog } from '../../../services/blogsApi';
 import BlogFormModal from '../../../components/BlogFormModal';
 import ProtectedRoute from '@/components/ProtectedRoute';
@@ -64,42 +64,69 @@ const AdminBlogsPage = () => {
   };
 
   const columns = [
-    { title: 'Title', dataIndex: 'title', key: 'title' },
-    { title: 'Excerpt', dataIndex: 'excerpt', key: 'excerpt' },
-    { title: 'Paid', dataIndex: 'paid', key: 'paid', render: (val: boolean) => (val ? 'Yes' : 'No') },
+    {
+      title: 'Title',
+      dataIndex: 'title',
+      key: 'title',
+      responsive: ['xs', 'sm', 'md', 'lg'], 
+    },
+    {
+      title: 'Excerpt',
+      dataIndex: 'excerpt',
+      key: 'excerpt',
+      responsive: ['md', 'lg'], 
+      ellipsis: true,
+    },
+    {
+      title: 'Paid',
+      dataIndex: 'paid',
+      key: 'paid',
+      render: (val: boolean) => (val ? 'Yes' : 'No'),
+      responsive: ['xs', 'sm', 'md', 'lg'],
+    },
     {
       title: 'Actions',
       key: 'actions',
       render: (_: any, record: any) => (
-        <Space>
-          <Button type="primary" onClick={() => handleOpenModal(record)}>Edit</Button>
-          <Popconfirm title="Are you sure?" onConfirm={() => handleDelete(record._id)}>
-            <Button danger>Delete</Button>
+        <Space wrap>
+          <Button type="primary" size="small" onClick={() => handleOpenModal(record)} style={{ width: 60 }}>Edit</Button>
+          <Popconfirm title="Are you sure?" onConfirm={() => handleDelete(record._id)} >
+            <Button danger size="small" style={{ width: 60 }}>Delete</Button>
           </Popconfirm>
         </Space>
       ),
+      responsive: ['xs', 'sm', 'md', 'lg'],
     },
   ];
 
   return (
     <ProtectedRoute role='admin'>
+      <div className="p-4 md:p-6">
+        <Row justify="space-between" align="middle" gutter={[16, 16]}>
+          <Col xs={24} sm={12}>
+            <Button type="primary" block onClick={() => handleOpenModal()} style={{ width: '100%', maxWidth: '100px' }}>New Blog</Button>
+          </Col>
+        </Row>
 
-    <div className="p-6">
-      <Space style={{ marginBottom: 16 }}>
-        <Button type="primary" onClick={() => handleOpenModal()}>New Blog</Button>
-      </Space>
-      <Table rowKey="_id" columns={columns} dataSource={blogs} loading={loading} />
+        <div style={{ overflowX: 'auto', marginTop: 16 }}>
+          <Table
+            rowKey="_id"
+            columns={columns}
+            dataSource={blogs}
+            loading={loading}
+            pagination={{ pageSize: 5 }}
+          />
+        </div>
 
-      <BlogFormModal
-        visible={modalVisible}
-        onCancel={() => setModalVisible(false)}
-        onSubmit={handleSubmit}
-        initialValues={editingBlog}
-        loading={modalLoading}
-      />
-    </div>
-  </ProtectedRoute>
-    
+        <BlogFormModal
+          visible={modalVisible}
+          onCancel={() => setModalVisible(false)}
+          onSubmit={handleSubmit}
+          initialValues={editingBlog}
+          loading={modalLoading}
+        />
+      </div>
+    </ProtectedRoute>
   );
 };
 
