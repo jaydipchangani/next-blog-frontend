@@ -51,9 +51,7 @@ const BlogDetailPage = () => {
         <Paragraph type="secondary">{blog.excerpt}</Paragraph>
         <Paragraph strong>{blog.paid ? 'Paid Blog' : 'Free Blog'}</Paragraph>
           <Paragraph>{blog.content}</Paragraph>
-          <Paragraph>
-            Content is restricted. Upgrade to premium to read full blog.
-          </Paragraph>
+        
         
       </Card>
     </div>
