@@ -44,11 +44,9 @@ const BlogDetailPage = () => {
         <Paragraph type="secondary">{blog.excerpt}</Paragraph>
         <Paragraph strong>{blog.paid ? 'Paid Blog' : 'Free Blog'}</Paragraph>
 
-        {isAccessible ? (
+        
           <Paragraph>{blog.content}</Paragraph>
-        ) : (
-          <Alert message="This is a paid blog. Please subscribe to read the full content." type="warning" />
-        )}
+        
       </Card>
     </div>
   );
