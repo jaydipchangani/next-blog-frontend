@@ -1,6 +1,6 @@
 'use client';
 import '@ant-design/v5-patch-for-react-19'; 
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useRef} from 'react';
 import { useParams } from 'next/navigation';
 import { Card, Spin, message, Typography, Alert } from 'antd';
 import { getBlogById } from '../../../services/blogsApi';
@@ -11,6 +11,7 @@ const { Title, Paragraph } = Typography;
 const BlogDetailPage = () => {
   const { id } = useParams();
   const { user } = useAuth();
+  const hasNotified = useRef(false);
 
   const [blog, setBlog] = useState<any>(null);
   const [loading, setLoading] = useState(false);
@@ -20,6 +21,14 @@ const BlogDetailPage = () => {
       setLoading(true);
       const data = await getBlogById(id as string);
       setBlog(data);
+
+      const isAccessible = !data.paid || (user && user.subscription);
+      if (data.paid && !(user && user.subscription) && !hasNotified.current) {
+      message.info(
+        'This is a paid blog. Only first three paid blogs are free to access. Upgrade to premium for more.'
+      );
+      hasNotified.current = true; 
+    }
     } catch (err) {
       message.error('Failed to load blog');
     } finally {
@@ -35,17 +44,16 @@ const BlogDetailPage = () => {
 
   if (!blog) return <Alert message="Blog not found" type="error" />;
 
-  const isAccessible = !blog.paid || (user && user.subscription);
-
   return (
     <div className="p-6 flex justify-center">
       <Card style={{ maxWidth: 800, width: '100%' }}>
         <Title level={2}>{blog.title}</Title>
         <Paragraph type="secondary">{blog.excerpt}</Paragraph>
         <Paragraph strong>{blog.paid ? 'Paid Blog' : 'Free Blog'}</Paragraph>
-
-        
           <Paragraph>{blog.content}</Paragraph>
+          <Paragraph>
+            Content is restricted. Upgrade to premium to read full blog.
+          </Paragraph>
         
       </Card>
     </div>
