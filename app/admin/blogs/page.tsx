@@ -5,6 +5,7 @@ import { Table, Button, Space, Popconfirm, message, Row, Col } from 'antd';
 import { getAllBlogs, deleteBlog, createBlog, updateBlog } from '../../../services/blogsApi';
 import BlogFormModal from '../../../components/BlogFormModal';
 import ProtectedRoute from '@/components/ProtectedRoute';
+import type { ColumnsType } from 'antd/es/table';
 
 const AdminBlogsPage = () => {
   const [blogs, setBlogs] = useState<any[]>([]);
@@ -63,7 +64,7 @@ const AdminBlogsPage = () => {
     }
   };
 
-  const columns = [
+  const columns: ColumnsType<any> = [
     {
       title: 'Title',
       dataIndex: 'title',
