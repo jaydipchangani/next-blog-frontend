@@ -1,10 +1,9 @@
 'use client';
 import '@ant-design/v5-patch-for-react-19';
-import { Modal, Form, Input, Switch, Button } from 'antd';
+import { Modal, Form, Input, Switch, Button,message } from 'antd';
 import { useEffect } from 'react';
 import { Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import type { UploadFile } from 'antd/es/upload/interface';
 
 interface BlogFormModalProps {
   visible: boolean;
@@ -67,13 +66,21 @@ const BlogFormModal: React.FC<BlogFormModalProps> = ({ visible, onCancel, onSubm
   getValueFromEvent={(e) => Array.isArray(e) ? e : e?.fileList || []}
 >
   <Upload
-    beforeUpload={() => false}
+    beforeUpload={(file) => {
+      const isImage = file.type.startsWith("image/");
+      if (!isImage) {
+        message.error("You can only upload image files!");
+      }
+      return isImage ? false : Upload.LIST_IGNORE;
+    }}
     listType="picture"
     maxCount={1}
+    accept="image/*"
   >
     <Button icon={<UploadOutlined />}>Upload</Button>
   </Upload>
 </Form.Item>
+
 
   <Form.Item>
     <Button type="primary" htmlType="submit" loading={loading} block>
