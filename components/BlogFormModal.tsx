@@ -4,6 +4,7 @@ import { Modal, Form, Input, Switch, Button } from 'antd';
 import { useEffect } from 'react';
 import { Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
+import type { UploadFile } from 'antd/es/upload/interface';
 
 interface BlogFormModalProps {
   visible: boolean;
@@ -16,24 +17,20 @@ interface BlogFormModalProps {
 const BlogFormModal: React.FC<BlogFormModalProps> = ({ visible, onCancel, onSubmit, initialValues, loading }) => {
   const [form] = Form.useForm();
 
- useEffect(() => {
+  useEffect(() => {
   if (!visible) return;
 
   if (initialValues) {
-    const normalizedValues = {
+    const normalizedImage = Array.isArray(initialValues.image)
+      ? initialValues.image
+      : initialValues.image
+      ? [initialValues.image]
+      : [];
+
+    form.setFieldsValue({
       ...initialValues,
-      image: initialValues.image
-        ? [
-            {
-              uid: '-1',
-              name: 'image.png',
-              status: 'done',
-              url: initialValues.image, 
-            },
-          ]
-        : [],
-    };
-    form.setFieldsValue(normalizedValues);
+      image: normalizedImage,
+    });
   } else {
     form.resetFields();
   }
@@ -67,10 +64,10 @@ const BlogFormModal: React.FC<BlogFormModalProps> = ({ visible, onCancel, onSubm
   label="Image"
   name="image"
   valuePropName="fileList"
-  getValueFromEvent={(e) => Array.isArray(e) ? e : e?.fileList}
+  getValueFromEvent={(e) => Array.isArray(e) ? e : e?.fileList || []}
 >
   <Upload
-    beforeUpload={() => false} // prevent auto-upload
+    beforeUpload={() => false}
     listType="picture"
     maxCount={1}
   >
