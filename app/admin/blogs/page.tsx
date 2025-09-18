@@ -1,5 +1,5 @@
 'use client';
-import '@ant-design/v5-patch-for-react-19'; 
+import '@ant-design/v5-patch-for-react-19';
 import { useEffect, useState } from 'react';
 import { Table, Button, Space, Popconfirm, message, Row, Col } from 'antd';
 import { getAllBlogs, deleteBlog, createBlog, updateBlog } from '../../../services/blogsApi';
@@ -46,36 +46,54 @@ const AdminBlogsPage = () => {
   };
 
   const handleSubmit = async (values: any) => {
-    try {
-      setModalLoading(true);
-      if (editingBlog) {
-        await updateBlog(editingBlog._id, values);
-        message.success('Blog updated!');
-      } else {
-        await createBlog(values);
-        message.success('Blog created!');
-      }
-      setModalVisible(false);
-      fetchBlogs();
-    } catch (err) {
-      message.error('Failed to save blog');
-    } finally {
-      setModalLoading(false);
+  try {
+    setModalLoading(true);
+
+    const formData = new FormData();
+    formData.append("title", values.title);
+    if (values.excerpt) formData.append("excerpt", values.excerpt);
+    formData.append("content", values.content);
+    formData.append("paid", values.paid ? "true" : "false");
+
+    if (values.image && values.image.length > 0) {
+  const fileObj = values.image[0].originFileObj || values.image[0];
+  if (fileObj) {
+    formData.append("image", fileObj);
+  }
+}
+    if (editingBlog) {
+      await updateBlog(editingBlog._id, formData);
+      message.success("Blog updated!");
+    } else {
+      await createBlog(formData);
+      message.success("Blog created!");
     }
-  };
+
+    setModalVisible(false);
+    fetchBlogs();
+  } catch (err) {
+    console.error("Form submit error:", err);
+    message.error("Failed to save blog");
+  } finally {
+    setModalLoading(false);
+  }
+};
+
+
+
 
   const columns: ColumnsType<any> = [
     {
       title: 'Title',
       dataIndex: 'title',
       key: 'title',
-      responsive: ['xs', 'sm', 'md', 'lg'], 
+      responsive: ['xs', 'sm', 'md', 'lg'],
     },
     {
       title: 'Excerpt',
       dataIndex: 'excerpt',
       key: 'excerpt',
-      responsive: ['md', 'lg'], 
+      responsive: ['md', 'lg'],
       ellipsis: true,
     },
     {
