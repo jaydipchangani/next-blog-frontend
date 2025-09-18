@@ -1,6 +1,6 @@
 'use client';
 import '@ant-design/v5-patch-for-react-19'; 
-import { useEffect, useState, useRef} from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useParams } from 'next/navigation';
 import { Card, Spin, message, Typography, Alert } from 'antd';
 import { getBlogById } from '../../../services/blogsApi';
@@ -22,13 +22,12 @@ const BlogDetailPage = () => {
       const data = await getBlogById(id as string);
       setBlog(data);
 
-      const isAccessible = !data.paid || (user && user.subscription);
       if (data.paid && !(user && user.subscription) && !hasNotified.current) {
-      message.info(
-        'This is a paid blog. Only first three paid blogs are free to access. Upgrade to premium for more.'
-      );
-      hasNotified.current = true; 
-    }
+        message.info(
+          'This is a paid blog. Only first three paid blogs are free to access. Upgrade to premium for more.'
+        );
+        hasNotified.current = true; 
+      }
     } catch (err) {
       message.error('Failed to load blog');
     } finally {
@@ -50,9 +49,22 @@ const BlogDetailPage = () => {
         <Title level={2}>{blog.title}</Title>
         <Paragraph type="secondary">{blog.excerpt}</Paragraph>
         <Paragraph strong>{blog.paid ? 'Paid Blog' : 'Free Blog'}</Paragraph>
-          <Paragraph>{blog.content}</Paragraph>
-        
-        
+
+        {blog.imageBase64 && (
+          <img
+            src={blog.imageBase64}
+            alt={blog.title}
+            style={{
+              width: '100%',
+              maxHeight: 400,
+              objectFit: 'cover',
+              borderRadius: 8,
+              marginBottom: 16,
+            }}
+          />
+        )}
+
+        <Paragraph>{blog.content}</Paragraph>
       </Card>
     </div>
   );

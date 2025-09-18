@@ -11,16 +11,23 @@ const BlogsPage = () => {
   const [loading, setLoading] = useState(false);
 
   const fetchBlogs = async () => {
-    try {
-      setLoading(true);
-      const data = await getUserBlogs();
-      setBlogs(data);
-    } catch (err) {
-      message.error('Failed to fetch blogs');
-    } finally {
-      setLoading(false);
-    }
-  };
+  try {
+    setLoading(true);
+    const data = await getUserBlogs();
+
+    const blogsWithImage = data.map((blog: any) => ({
+      ...blog,
+      imageUrl: blog.imageBase64 || null,  
+    }));
+
+    setBlogs(blogsWithImage);
+  } catch (err) {
+    message.error('Failed to fetch blogs');
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   useEffect(() => {
     fetchBlogs();
@@ -39,6 +46,7 @@ const BlogsPage = () => {
               title={blog.title}
               excerpt={blog.excerpt}
               paid={blog.paid}
+              imageUrl={blog.imageUrl} 
             />
           ))}
         </div>
