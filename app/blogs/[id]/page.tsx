@@ -1,5 +1,5 @@
 'use client';
-import '@ant-design/v5-patch-for-react-19'; 
+import '@ant-design/v5-patch-for-react-19';
 import { useEffect, useState, useRef } from 'react';
 import { useParams } from 'next/navigation';
 import { Card, Spin, message, Typography, Alert } from 'antd';
@@ -26,7 +26,7 @@ const BlogDetailPage = () => {
         message.info(
           'This is a paid blog. Only first three paid blogs are free to access. Upgrade to premium for more.'
         );
-        hasNotified.current = true; 
+        hasNotified.current = true;
       }
     } catch (err) {
       message.error('Failed to load blog');
@@ -44,10 +44,10 @@ const BlogDetailPage = () => {
   if (!blog) return <Alert message="Blog not found" type="error" />;
 
   return (
-    <div className="p-6 flex justify-center">
+    <div className="p-0 flex justify-center lg:p-6 ">
       <Card style={{ maxWidth: 800, width: '100%' }}>
         <Title level={2}>{blog.title}</Title>
-        <Paragraph type="secondary">{blog.excerpt}</Paragraph>
+        <Paragraph type="secondary" className='text-justify'>{blog.excerpt}</Paragraph>
         <Paragraph strong>{blog.paid ? 'Paid Blog' : 'Free Blog'}</Paragraph>
 
         {blog.imageBase64 && (
@@ -64,7 +64,7 @@ const BlogDetailPage = () => {
           />
         )}
 
-        <Paragraph>{blog.content}</Paragraph>
+        <Paragraph className='text-justify whitespace-pre-line'>{blog.content}</Paragraph>
       </Card>
     </div>
   );

@@ -27,7 +27,7 @@ const BlogCard = ({ id, title, excerpt, paid, imageUrl }: BlogCardProps) => {
           ) : null
         }
       >
-        <p className="text-gray-600">{excerpt}</p>
+        <p className="text-gray-600 excerpt" >{excerpt}</p>
       </Card>
     </Link>
   );
