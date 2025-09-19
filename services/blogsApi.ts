@@ -1,8 +1,16 @@
 import axios from './api';
 
-export const getAllBlogs = async () => {
-  const res = await axios.get('/blogs');
-  return res.data;
+interface GetAllBlogsParams {
+  search?: string;
+  sortBy?: string;
+  sortOrder?: 'asc' | 'desc';
+  page?: number;
+  limit?: number;
+}
+
+export const getAllBlogs = async (params?: GetAllBlogsParams) => {
+  const res = await axios.get('/blogs', { params });
+  return res.data; 
 };
 
 export const getUserBlogs = async () => {

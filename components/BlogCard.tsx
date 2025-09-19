@@ -14,7 +14,7 @@ const BlogCard = ({ id, title, excerpt, paid, imageUrl }: BlogCardProps) => {
     <Link href={`/blogs/${id}`}>
       <Card
         hoverable
-        className="transition transform hover:-translate-y-1 hover:shadow-lg cursor-pointer"
+        className=" h-[400px] transition transform hover:-translate-y-1 hover:shadow-lg cursor-pointer"
         title={title}
         extra={paid ? <Tag color="red">Paid</Tag> : <Tag color="green">Free</Tag>}
         cover={
