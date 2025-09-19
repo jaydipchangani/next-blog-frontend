@@ -15,30 +15,32 @@ const AdminBlogsPage = () => {
   const [modalLoading, setModalLoading] = useState(false);
 
   const fetchBlogs = async () => {
-  try {
-    setLoading(true);
-    const data = await getAllBlogs();
+    try {
+      setLoading(true);
+      const data = await getAllBlogs();
 
-    const blogsWithImages = data.map((blog: any) => {
-      if (blog.image && blog.image.buffer && blog.image.contentType) {
-        const blob = new Blob([blog.image.buffer], { type: blog.image.contentType });
-        const url = URL.createObjectURL(blob);
+      const blogsWithImages = data.map((blog: any) => {
+        let imageBase64 = null;
+        if (blog.image && blog.imageType) {
+          imageBase64 = `data:${blog.imageType};base64,${blog.image}`;
+        }
+
         return {
           ...blog,
-          image: [{ uid: '-1', name: 'image.png', status: 'done', url }], 
+          imageBase64, 
+          image: blog.image, 
+          imageType: blog.imageType || null,
         };
-      }
-      return blog;
-    });
+      });
 
-    setBlogs(blogsWithImages);
-  } catch (err) {
-    message.error('Failed to fetch blogs');
-  } finally {
-    setLoading(false);
-  }
-};
-
+      setBlogs(blogsWithImages);
+    } catch (err) {
+      console.error(err);
+      message.error("Failed to fetch blogs");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetchBlogs();
@@ -54,24 +56,24 @@ const AdminBlogsPage = () => {
     }
   };
 
- const handleOpenModal = (blog?: any) => {
-  if (blog && blog.imageBase64) {
-    setEditingBlog({
-      ...blog,
-      image: [
-        {
-          uid: '-1',
-          name: 'image.png',
-          status: 'done',
-          url: blog.imageBase64,
-        },
-      ],
-    });
-  } else {
-    setEditingBlog(blog || { image: [] });
-  }
-  setModalVisible(true);
-};
+  const handleOpenModal = (blog?: any) => {
+    if (blog && blog.imageBase64) {
+      setEditingBlog({
+        ...blog,
+        image: [
+          {
+            uid: "-1",
+            name: "image.png",
+            status: "done",
+            url: blog.imageBase64, 
+          },
+        ],
+      });
+    } else {
+      setEditingBlog(null); 
+    }
+    setModalVisible(true);
+  };
 
 
   const handleSubmit = async (values: any) => {
@@ -82,14 +84,15 @@ const AdminBlogsPage = () => {
     formData.append("title", values.title);
     if (values.excerpt) formData.append("excerpt", values.excerpt);
     formData.append("content", values.content);
-    formData.append('paid', values.paid ? 'true' : 'false');
+    formData.append("paid", values.paid ? "true" : "false");
 
     if (values.image && values.image.length > 0) {
-  const fileObj = values.image[0].originFileObj || values.image[0];
-  if (fileObj) {
-    formData.append("image", fileObj);
-  }
-}
+      const fileObj = values.image[0].originFileObj; 
+      if (fileObj) {
+        formData.append("image", fileObj);
+      }
+    }
+
     if (editingBlog) {
       await updateBlog(editingBlog._id, formData);
       message.success("Blog updated!");

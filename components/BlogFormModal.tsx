@@ -61,7 +61,7 @@ const BlogFormModal: React.FC<BlogFormModalProps> = ({ visible, onCancel, onSubm
 
   <Form.Item
   label="Image"
-  name="file"
+  name="image"
   valuePropName="fileList"
   getValueFromEvent={(e) => Array.isArray(e) ? e : e?.fileList || []}
 >
