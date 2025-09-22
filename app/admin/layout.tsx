@@ -22,7 +22,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
         {/* Main content */}
         <div className="flex-1 flex flex-col">
           <Navbar />
-          <main className="p-6 flex-1 overflow-auto">{children}</main>
+          <main className="flex-1 overflow-auto">{children}</main>
         </div>
       </div>
     </ProtectedRoute>

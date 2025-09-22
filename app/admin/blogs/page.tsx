@@ -174,7 +174,7 @@ const AdminBlogsPage = () => {
 
   return (
     <ProtectedRoute role='admin'>
-      <div className="p-4 md:p-6">
+      <div className=" overflow-hidden pt-20 pb-5 pr-5 pl-5 sm:pl-0 md:pl-68 ">
         <Row justify="space-between" align="middle" gutter={[16, 16]}>
           <Col xs={24} sm={12}>
             <Button type="primary" block onClick={() => handleOpenModal()} style={{ width: '100%', maxWidth: '100px' }}>New Blog</Button>
@@ -189,7 +189,7 @@ const AdminBlogsPage = () => {
           </Col>
         </Row>
 
-        <div style={{ overflowX: 'auto', marginTop: 16 }}>
+        <div style={{ overflowX: 'auto', marginTop: 16 ,width:"99%"}}>
           <Table
             rowKey="_id"
             columns={columns}

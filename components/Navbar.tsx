@@ -17,7 +17,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="bg-white shadow px-6 py-3 flex justify-between items-center">
+    <nav className="fixed top-0 left-0 right-0 h-16 bg-white shadow z-50 px-6 py-3 flex justify-between items-center">
       <div className="text-xl font-bold text-gray-800">MyBlogApp</div>
       <div className="flex items-center space-x-4">
         {user && (

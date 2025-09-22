@@ -22,7 +22,7 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
         {/* Main content */}
         <div className="flex-1 flex flex-col">
           <Navbar />
-          <main className="p-6 flex-1 overflow-auto">{children}</main>
+        <main className="flex-1 overflow-auto pt-20 pb-5 pl-5 sm:pl-0 md:pl-68 pr-5 ">{children}</main>
         </div>
       </div>
     </ProtectedRoute>

@@ -22,7 +22,7 @@ const Sidebar = ({ role }: SidebarProps) => {
       : [{ name: 'Blogs', icon: <FileTextOutlined />, href: '/blogs' }];
 
   return (
-    <aside className="w-64 bg-white border-r min-h-screen p-4 hidden md:block">
+    <aside className="fixed top-16 left-0 w-64 h-[calc(100vh-64px)] bg-white border-r p-4 hidden md:block z-40">
       <ul className="space-y-2">
         {menuItems.map((item) => (
           <li key={item.href}>
