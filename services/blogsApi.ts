@@ -13,8 +13,14 @@ export const getAllBlogs = async (params?: GetAllBlogsParams) => {
   return res.data; 
 };
 
-export const getUserBlogs = async () => {
-  const res = await axios.get('/blogs');
+export const getUserBlogs = async (params?: { page?: number; search?: string; sort?: string }) => {
+  const res = await axios.get('/blogs', {
+    params: {
+      page: params?.page || 1,
+      search: params?.search || '',
+      sort: params?.sort || 'asc',
+    },
+  });
   return res.data;
 };
 

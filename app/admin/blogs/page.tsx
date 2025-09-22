@@ -203,6 +203,7 @@ const AdminBlogsPage = () => {
               showTotal: (total, range) => `${range[1]} of ${total} records`,
             }}
             onChange={handleTableChange}
+            scroll={{ y: 500 }}
           />
         </div>
 
