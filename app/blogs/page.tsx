@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { message, Input, Select, Pagination } from 'antd';
 import { getUserBlogs } from '../../services/blogsApi';
 import BlogCard from '../../components/BlogCard';
-import DashboardLayout from './[id]/layout';
+import DashboardLayout from './layout';
 
 const { Search } = Input;
 const { Option } = Select;

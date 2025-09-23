@@ -1,10 +1,10 @@
 'use client';
 
 import React from 'react';
-import Navbar from '../../../components/Navbar';
-import Sidebar from '../../../components/Sidebar';
-import { useAuth } from '../../../context/AuthContext';
-import ProtectedRoute from '../../../components/ProtectedRoute';
+import Navbar from '../../components/Navbar';
+import Sidebar from '../../components/Sidebar';
+import { useAuth } from '../../context/AuthContext';
+import ProtectedRoute from '../../components/ProtectedRoute';
 
 const UserLayout = ({ children }: { children: React.ReactNode }) => {
   const { user } = useAuth();
@@ -22,7 +22,7 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
         {/* Main content */}
         <div className="flex-1 flex flex-col">
           <Navbar />
-        <main className="flex-1 overflow-auto pt-20 pb-5 pl-5 sm:pl-0 md:pl-68 pr-5 ">{children}</main>
+        <main className="flex-1 overflow-auto pt-10 pb-5 pl-5 sm:pl-0 md:pl-36 pr-5 ">{children}</main>
         </div>
       </div>
     </ProtectedRoute>

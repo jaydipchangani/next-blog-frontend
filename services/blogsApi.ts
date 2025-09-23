@@ -52,3 +52,13 @@ export const getBlogById = async (id: string) => {
   const res = await axios.get(`/blogs/${id}`);
   return res.data;
 };
+
+export async function fetchTopBlogs(token: string) {
+  const res = await axios.get("/blogs/top/views", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return res.data;
+}
+
