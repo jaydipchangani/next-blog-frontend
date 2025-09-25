@@ -15,6 +15,7 @@ const BlogDetailPage = () => {
 
   const [blog, setBlog] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   const fetchBlog = async () => {
     try {
@@ -39,16 +40,44 @@ const BlogDetailPage = () => {
     if (id) fetchBlog();
   }, [id]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrolled = (scrollTop / docHeight) * 100;
+      setScrollProgress(scrolled);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   if (loading) return <Spin className="flex justify-center items-center h-screen" />;
 
   if (!blog) return <Alert message="Blog not found" type="error" />;
 
   return (
-    <div className="p-0 flex justify-center lg:p-6 ">
-      <Card style={{ maxWidth: 800, width: '100%' }}>
-        <Title level={2}>{blog.title}</Title>
-        <Paragraph type="secondary" className='text-justify'>{blog.excerpt}</Paragraph>
-        <Paragraph strong>{blog.paid ? 'Paid Blog' : 'Free Blog'}</Paragraph>
+    <>
+      <div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          height: '5px',
+          backgroundColor: '#1890ff',
+          width: `${scrollProgress}%`,
+          zIndex: 9999,
+          transition: 'width 0.2s ease-out',
+        }}
+      />
+
+      <div className="p-0 flex justify-center lg:p-6">
+        <Card style={{ maxWidth: 800, width: '100%' }}>
+          <Title level={2}>{blog.title}</Title>
+          <Paragraph type="secondary" className="text-justify">
+            {blog.excerpt}
+          </Paragraph>
+          <Paragraph strong>{blog.paid ? 'Paid Blog' : 'Free Blog'}</Paragraph>
 
         {blog.imageBase64 && (
           <img
@@ -67,6 +96,7 @@ const BlogDetailPage = () => {
         <Paragraph className='text-justify whitespace-pre-line'>{blog.content}</Paragraph>
       </Card>
     </div>
+  </>
   );
 };
 
