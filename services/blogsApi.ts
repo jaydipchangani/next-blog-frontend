@@ -9,7 +9,7 @@ interface GetAllBlogsParams {
 }
 
 export const getAllBlogs = async (params?: GetAllBlogsParams) => {
-  const res = await axios.get('/blogs', { params });
+  const res = await axios.get('/blogs/my-blogs', { params });
   return res.data; 
 };
 
