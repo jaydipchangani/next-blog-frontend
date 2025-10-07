@@ -10,15 +10,15 @@ const GoogleCallbackPage = () => {
   const { setUser }: any = useAuth();
 
   useEffect(() => {
-    console.log('GoogleCallbackPage mounted');
+    //console.log('GoogleCallbackPage mounted');
     const token = params.get('token');
-    console.log('token from URL:', token);
+    //console.log('token from URL:', token);
 
     if (token && typeof token === 'string' && setUser) {
       try {
         localStorage.setItem('token', token);
         const decoded: any = jwtDecode(token);
-        console.log('decoded JWT:', decoded);
+        //console.log('decoded JWT:', decoded);
 
         setUser(decoded);
         setTimeout(() => {

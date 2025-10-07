@@ -22,7 +22,6 @@ const BlogDetailPage = () => {
       setLoading(true);
       const data = await getBlogById(id as string);
       setBlog(data);
-
       if (data.paid && !(user && user.subscription) && !hasNotified.current) {
         message.info(
           'This is a paid blog. Only first three paid blogs are free to access. Upgrade to premium for more.'
@@ -78,6 +77,10 @@ const BlogDetailPage = () => {
             {blog.excerpt}
           </Paragraph>
           <Paragraph strong>{blog.paid ? 'Paid Blog' : 'Free Blog'}</Paragraph>
+          <Paragraph type="secondary">
+            By {blog.authorId?.name || 'Unknown Author'} | Published on{' '}
+            {new Date(blog.createdAt).toLocaleDateString()} | Views: {blog.views || 0}
+          </Paragraph>
 
         {blog.imageBase64 && (
           <img
